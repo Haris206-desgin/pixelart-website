@@ -36,11 +36,14 @@
 
         /* --- Hero --- */
         .hero-animate { opacity: 0; transform: translateX(-50px); }
-        .hero-logo-wrapper { margin-bottom: 20px; }
+        .hero-logo-wrapper { margin-bottom: 20px; background: transparent; } /* Ensure transparent background */
         .hero-logo-img {
             width: clamp(80px, 20vw, 110px); height: auto;
-            filter: invert(1) drop-shadow(0 0 10px var(--primary)); 
+            /* Removed invert(1) if it was causing a box effect on non-transparent images */
+            filter: drop-shadow(0 0 10px var(--primary)); 
             animation: floatLogo 4s ease-in-out infinite;
+            display: block;
+            background-color: transparent; /* Forces no background color on the element */
         }
         @keyframes floatLogo { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
@@ -60,6 +63,10 @@
         .card:hover, .content-card:hover { border-color: var(--primary); transform: translateY(-5px); }
         .card h4 { margin: 0 0 10px 0; color: var(--primary); font-size: 1.2rem; }
 
+        .industry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 10px; }
+        .industry-item { color: #ccc; display: flex; align-items: center; gap: 8px; font-weight: 500; }
+        .industry-item span { color: var(--primary); font-size: 1.2rem; }
+
         /* --- Solid Client Section --- */
         .client-section { margin-top: 50px; text-align: center; width: 100%; }
         .client-card { 
@@ -72,7 +79,7 @@
         }
         .client-img { width: 100%; height: auto; border-radius: 10px; object-fit: contain; filter: contrast(1.1); }
 
-        /* --- Contact (Back to Original Style) --- */
+        /* --- Contact --- */
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; border-top: 1px solid #333; padding-top: 40px; margin-bottom: 50px; }
         .contact-link { 
             color: var(--primary); text-decoration: none; 
@@ -127,6 +134,44 @@
             <div class="card reveal"><h4>Customized Packaging</h4><p>Bespoke boxes and bags for your brand.</p></div>
             <div class="card reveal"><h4>Label & Tag Printing</h4><p>High-definition product labels and stickers.</p></div>
             <div class="card reveal"><h4>Promotional Items</h4><p>Custom-branded merchandise and corporate gifts.</p></div>
+        </div>
+    </section>
+
+    <section id="why-us">
+        <h2 class="reveal">Why PixelArt?</h2>
+        <div class="grid">
+            <div class="card reveal">
+                <h4>Creativity & Innovation</h4>
+                <p>We blend artistry with technology, delivering products that capture attention and leave a lasting impression.</p>
+            </div>
+            <div class="card reveal">
+                <h4>Reliability & Quality</h4>
+                <p>Every project is meticulously crafted to ensure superior quality and client satisfaction.</p>
+            </div>
+            <div class="card reveal">
+                <h4>Sustainability Commitment</h4>
+                <p>We are dedicated to minimizing environmental impact by offering sustainable packaging solutions and green practices.</p>
+            </div>
+            <div class="card reveal">
+                <h4>Comprehensive Solutions</h4>
+                <p>Our full-service approach ensures that clients receive support and guidance from concept to delivery.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="industries-list">
+        <h2 class="reveal">Industries We Serve</h2>
+        <div class="content-card reveal">
+            <p style="margin-bottom: 25px;">PixelArt serves a diverse array of industries, including but not limited to:</p>
+            <div class="industry-grid">
+                <div class="industry-item"><span>♦</span> Food and Beverage</div>
+                <div class="industry-item"><span>♦</span> Pharmaceuticals and Healthcare</div>
+                <div class="industry-item"><span>♦</span> Retail and Consumer Goods</div>
+                <div class="industry-item"><span>♦</span> Beauty and Cosmetics</div>
+                <div class="industry-item"><span>♦</span> Technology and Electronics</div>
+                <div class="industry-item"><span>♦</span> Fashion and Apparel</div>
+                <div class="industry-item"><span>♦</span> Automotive and Industrial Sectors</div>
+            </div>
         </div>
     </section>
 
