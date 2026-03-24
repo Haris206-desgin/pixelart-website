@@ -60,46 +60,34 @@
         .card:hover, .content-card:hover { border-color: var(--primary); transform: translateY(-5px); }
         .card h4 { margin: 0 0 10px 0; color: var(--primary); font-size: 1.2rem; }
 
-        /* --- Updated Solid Effect for Clients --- */
+        /* --- Solid Client Section --- */
         .client-section { margin-top: 50px; text-align: center; width: 100%; }
         .client-card { 
-            background: rgba(255, 255, 255, 0.95); /* Solid white background for logos to be clear */
+            background: rgba(255, 255, 255, 0.95); 
             padding: 30px; 
             border-radius: 20px; 
             border: 2px solid #eaeaea; 
             overflow: hidden; 
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Soft shadow for depth */
-            transition: 0.5s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
+        .client-img { width: 100%; height: auto; border-radius: 10px; object-fit: contain; filter: contrast(1.1); }
 
-        /* Interactive Effect on Hover */
-        .client-card:hover {
-            border-color: var(--primary);
-            box-shadow: 0 0 25px rgba(0, 210, 255, 0.5);
-            transform: translateY(-5px) scale(1.01);
+        /* --- Contact (Back to Original Style) --- */
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; border-top: 1px solid #333; padding-top: 40px; margin-bottom: 50px; }
+        .contact-link { 
+            color: var(--primary); text-decoration: none; 
+            display: flex; align-items: center; gap: 12px; 
+            margin: 15px 0; font-size: clamp(0.9rem, 2vw, 1.1rem); transition: 0.3s; 
+            word-break: break-all;
         }
-
-        .client-img { 
-            width: 100%; 
-            height: auto; 
-            border-radius: 10px; 
-            object-fit: contain;
-            /* Maximum contrast and brightness for solid look */
-            filter: brightness(1) contrast(1.1);
-            transition: 0.5s ease;
-        }
+        .contact-link:hover { opacity: 0.8; transform: translateX(5px); }
 
         @media (max-width: 768px) {
             section { padding: 80px 7% 40px 7%; min-height: auto; }
             nav { padding: 10px 5%; }
             .logo { font-size: 1.2rem; }
-            .ntn-tag { font-size: 0.6rem; padding: 3px 8px; }
             .grid { grid-template-columns: 1fr; }
             .client-card { padding: 20px; }
-        }
-
-        @media (hover: none) {
-            .card:hover, .content-card:hover, .client-card:hover { transform: none; }
         }
     </style>
 </head>
@@ -172,46 +160,31 @@
     </section>
 
     <script>
-        // Three.js Background
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // High DPI support
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         document.getElementById('canvas-container').appendChild(renderer.domElement);
         
         const sphere = new THREE.Mesh(new THREE.IcosahedronGeometry(2, 1), new THREE.MeshPhongMaterial({ color: 0x00d2ff, wireframe: true }));
         scene.add(sphere);
         const light = new THREE.PointLight(0xffffff, 1, 100); light.position.set(10, 10, 10); scene.add(light);
-        camera.position.z = window.innerWidth < 768 ? 6 : 5; // Zoom out slightly on mobile
+        camera.position.z = window.innerWidth < 768 ? 6 : 5;
 
         function animate() { requestAnimationFrame(animate); sphere.rotation.y += 0.003; sphere.rotation.x += 0.002; renderer.render(scene, camera); }
         animate();
 
-        // GSAP Animations
         gsap.registerPlugin(ScrollTrigger);
+        gsap.to(".hero-animate", { x: 0, opacity: 1, duration: 1.2, stagger: 0.3, ease: "power3.out" });
 
-        // Hero Animation (Left to Right)
-        gsap.to(".hero-animate", {
-            x: 0,
-            opacity: 1,
-            duration: 1.2,
-            stagger: 0.3,
-            ease: "power3.out"
-        });
-
-        // Reveal on Scroll
         gsap.utils.toArray(".reveal").forEach((el) => {
             gsap.to(el, { 
                 scrollTrigger: { trigger: el, start: "top 92%" }, 
-                opacity: 1, 
-                y: 0, 
-                duration: 1,
-                ease: "power2.out"
+                opacity: 1, y: 0, duration: 1, ease: "power2.out"
             });
         });
 
-        // Resize handler
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
